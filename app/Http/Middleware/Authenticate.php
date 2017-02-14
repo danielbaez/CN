@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace SisVenta\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -46,7 +46,7 @@ class Authenticate
         if($this->auth->check() && $this->auth->user()->estado !== 1){
             $this->auth->logout();
             //return redirect('auth/login')->withErrors('Su cuenta de usuario está desacticada');
-            return redirect()->route('login-get')->withErrors('Su cuenta de usuario está desacticada');
+            return redirect()->route('login-get')->withErrors('Su cuenta está desactivada');
         }
 
         return $next($request);

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Middleware;
+namespace SisVenta\Http\Middleware;
 use Closure;
 class NoCache
 {

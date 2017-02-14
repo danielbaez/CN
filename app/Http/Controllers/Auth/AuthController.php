@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace SisVenta\Http\Controllers\Auth;
 
-use App\User;
+use SisVenta\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use SisVenta\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -29,7 +29,7 @@ class AuthController extends Controller
      * @return void
      */
 
-    protected $redirectPath = '/admin';
+    protected $redirectPath = '/admin/sucursales';
 
     protected $redirectAfterLogout = '/auth/login';
 

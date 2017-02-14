@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace SisVenta\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;

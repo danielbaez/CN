@@ -11,13 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 // User dependency injection
 Route::bind('user', function($user){
-    return App\User::find($user);
+    return SisVenta\User::find($user);
 });
 
 Route::get('auth/login', [
@@ -37,7 +35,7 @@ Route::get('auth/logout', [
 
 Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function () {
     
-	Route::get('/', ['as' => 'home','uses' => 'HomeController@home']);	
+	Route::get('/sucursales', ['as' => 'home','uses' => 'SucursalController@lista']);
 
 	// Route::group( ['middleware' => ['administrador']], function() {
 	// 	Route::resource('user', 'UserController');	
