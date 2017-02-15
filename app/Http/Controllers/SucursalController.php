@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use SisVenta\Http\Requests;
 use SisVenta\Http\Controllers\Controller;
 
+use SisVenta\Sucursal;
+
 class SucursalController extends Controller
 {
     /**
@@ -21,8 +23,8 @@ class SucursalController extends Controller
 
     public function lista()
     {
-        
-        return View('principal.index', compact('users'));
+        $sucursales = Sucursal::where('estado', 1)->get();
+        return View('principal.index2', compact('sucursales'));
     }
 
     /**
