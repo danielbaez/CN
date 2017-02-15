@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use SisVenta\Http\Requests;
 use SisVenta\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Auth;
+
+use SisVenta\Usuario;
 use SisVenta\Sucursal;
 
 class SucursalController extends Controller
@@ -23,8 +26,15 @@ class SucursalController extends Controller
 
     public function lista()
     {
-        $sucursales = Sucursal::where('estado', 1)->get();
-        return View('principal.index2', compact('sucursales'));
+        $users = Usuario::where('id_empleado', Auth::user()->id)->where('estado', 1)->get();
+        if(!$users->isEmpty()){
+            //$verificarSucursal = Sucursal::where('id', $users)->get();
+            $sucursales = Sucursal::where('estado', 1)->get();    
+            return View('principal.index2', compact('sucursales'));
+        }
+        else{
+        dd('no hay usuarios asociados a este empleado');   
+        }
     }
 
     /**
