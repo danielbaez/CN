@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use SisVenta\Usuario;
 use SisVenta\Sucursal;
 
+use DB;
+
 class SucursalController extends Controller
 {
     /**
@@ -26,14 +28,22 @@ class SucursalController extends Controller
 
     public function lista()
     {
-        $users = Usuario::where('id_empleado', Auth::user()->id)->where('estado', 1)->get();
-        if(!$users->isEmpty()){
-            //$verificarSucursal = Sucursal::where('id', $users)->get();
-            $sucursales = Sucursal::where('estado', 1)->get();    
+        $sucursales = DB::table('usuarios')
+            ->join('sucursales', 'usuarios.id_sucursal', '=', 'sucursales.id')
+            ->where('usuarios.estado', 1)
+            ->where('sucursales.estado', 1)
+            ->where('usuarios.id_empleado', 1)
+            //->select('usuarios.*', 'sucursales.*')
+            ->select('sucursales.*')
+            ->get();
+        if($sucursales){
+            //$sucursales = Sucursal::where('estado', 1)->get();    
             return View('principal.index2', compact('sucursales'));
         }
         else{
-        dd('no hay usuarios asociados a este empleado');   
+        $mensaje = 'No hay usuarios o sucursales asociados a este empleado';
+        $sucursales = false;
+        return View('principal.index2', compact('mensaje', 'sucursales'));   
         }
     }
 
