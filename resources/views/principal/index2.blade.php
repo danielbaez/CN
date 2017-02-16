@@ -38,7 +38,7 @@
         <div class="top_nav" style="margin-left: 0">
           <div class="nav_menu">
             <nav>
-            <img src="http://www.grupocnet.com.co/templates/umaster/images/logo.svg" style="width: 248px;height: 57px;">
+            <img src="http://www.grupocnet.com.co/templates/umaster/images/logo.svg" style="width: 230px;height: 57px;">
               <!-- <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
 
@@ -51,14 +51,6 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
-                    <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                    </li>
-                    <li><a href="javascript:;">Help</a></li>
                     <li><a href="{{ route('logout') }}"><i class="fa fa-fw fa-power-off pull-right"></i> Cerrar Sesión</a></li>
                   </ul>
                 </li>
@@ -82,41 +74,6 @@
                       </a>
                     </li>
                     <li>
-                      <a>
-                        <span class="image"><img src="{{ asset('images/img.jpg') }}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="{{ asset('images/img.jpg') }}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="{{ asset('images/img.jpg') }}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
                     <li>
                       <div class="text-center">
                         <a>
@@ -151,7 +108,7 @@
                           <tbody>
                             @foreach($sucursales as $sucursal)
                             <tr>
-                              <th scope="row">{{ $sucursal->id }}</th><td>{{ $sucursal->razon_social }}</td><td>{{ $sucursal->direccion }}</td><td>{{ $sucursal->representante }}</td><td><button class="btn btn-primary">Ingresar</button></td>
+                              <th scope="row">{{ $sucursal->id }}</th><td>{{ $sucursal->razon_social }}</td><td>{{ $sucursal->direccion }}</td><td>{{ $sucursal->representante }}</td><td><a href="{{ route('irSucurcal', $sucursal->id) }}" class="btn btn-primary">Ingresar</a></td>
                             </tr>
                             @endforeach
                           </tbody>

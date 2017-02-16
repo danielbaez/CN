@@ -37,6 +37,10 @@ Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function
     
 	Route::get('/sucursales', ['as' => 'home','uses' => 'SucursalController@lista']);
 
+	Route::get('/sucursales/{id_sucursal}', ['as' => 'irSucurcal', 'uses' => 'HomeController@irSucurcal']);
+
+	Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard']);
+
 	// Route::group( ['middleware' => ['administrador']], function() {
 	// 	Route::resource('user', 'UserController');	
 	// });
