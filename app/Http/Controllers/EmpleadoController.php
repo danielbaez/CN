@@ -8,42 +8,26 @@ use SisVenta\Http\Requests;
 use SisVenta\Http\Controllers\Controller;
 
 use SisVenta\Sucursal;
+use SisVenta\User;
 
-//use Symfony\Component\HttpFoundation\Session\Session;
-
-class HomeController extends Controller
+class EmpleadoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function irSucurcal($id_sucursal)
-    {
-        $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        
-        if(!$sucursal->isEmpty()){
-            \Session::put('id_sucursal', $id_sucursal);
-            /*$session = new Session();
-            $session->set('id_sucursal', $id_sucursal);*/
-            return \Redirect::to('/admin/dashboard');  
-        }
-        else{
-            dd(2);
-        }
-        //return View('template', compact('sucursal'));
-         
-    }
-
-    public function dashboard()
+    public function index()
     {
         $id_sucursal = \Session::get('id_sucursal');
         /*$session = new Session();
         $id_sucursal = $session->get('id_sucursal');*/
 
         $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        return View('template', compact('sucursal'));
-         
+
+        $empleados = User::all();
+
+        return view('empleados.index', compact('sucursal', 'empleados'));
     }
 
     /**
@@ -53,7 +37,12 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        $id_sucursal = \Session::get('id_sucursal');
+        /*$session = new Session();
+        $id_sucursal = $session->get('id_sucursal');*/
+
+        $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
+        return view('empleados.create', compact('sucursal'));
     }
 
     /**

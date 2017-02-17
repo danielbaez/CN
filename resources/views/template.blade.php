@@ -67,7 +67,7 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Mantenimiento <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="form.html">Empleados</a></li>
+                      <li><a href="{{ route('admin.empleados.index') }}">Empleados</a></li>
                       <li><a href="form.html">Sucursales</a></li>
                       <li><a href="form_advanced.html">Usuarios</a></li>
                       <li><a href="form_validation.html">Configuración</a></li>
@@ -191,6 +191,7 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
+         @section('content')
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -543,10 +544,9 @@
             </div>
 
           </div>
-
-
-          
+          @show
         </div>
+
         <!-- /page content -->
 
       </div>

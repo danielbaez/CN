@@ -41,6 +41,10 @@ Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function
 
 	Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard']);
 
+	//Route::get('/empleados', ['as' => 'empleados', 'uses' => 'EmpleadoController@index']);
+
+	Route::resource('empleados', 'EmpleadoController');
+
 	// Route::group( ['middleware' => ['administrador']], function() {
 	// 	Route::resource('user', 'UserController');	
 	// });
