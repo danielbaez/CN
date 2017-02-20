@@ -4,7 +4,8 @@
   <div class="row" style="width: 85%;margin: 0 auto">
       @include('partials.errors')
 
-      {!! Form::open(['route'=>'admin.empleados.store']) !!}
+      {!! Form::model($empleado, array('route' => array('admin.empleados.update', $empleado))) !!}
+          <input type="hidden" name="_method" value="PUT">
           <div class='col-xs-12 col-md-6'>
               <div class="form-group">
                   <label for="name">Nombre:</label>

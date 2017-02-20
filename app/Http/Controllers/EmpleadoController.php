@@ -42,7 +42,8 @@ class EmpleadoController extends Controller
         $id_sucursal = $session->get('id_sucursal');*/
 
         $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        return view('empleados.create', compact('sucursal'));
+        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        return view('empleados.create', compact('sucursal', 'tipo_documento'));
     }
 
     /**
@@ -53,7 +54,39 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $this->validate($request, [
+            'nombre'      => 'required|max:50',
+            'apellido'      => 'required|max:50',
+            'tipo_documento'      => 'required|in:dni,ruc',
+            'nro_documento'      => 'required|max:20',
+            'fecha_nacimiento'      => 'required',
+            'direccion'      => 'required|max:100',
+            'telefono'      => 'required|max:10',
+            'email'     => 'required|email',
+            'usuario'     => 'required',
+            'password'  => 'required|max:20',
+            'estado'      => 'required|in:1,0'
+        ]);
+
+        $empleado = User::create([
+            'nombre' => $request->get('nombre'),
+            'apellido' => $request->get('apellido'),
+            'tipo_documento' => $request->get('tipo_documento'),
+            'nro_documento' => $request->get('nro_documento'),
+            'fecha_nacimiento' => $request->get('fecha_nacimiento'),
+            'direccion' => $request->get('direccion'),
+            'telefono' => $request->get('telefono'),
+            'email' => $request->get('email'),
+            'usuario' => $request->get('usuario'),
+            'password' => \Hash::make($request->get('password')),
+            'estado' => $request->get('estado'),
+            'foto' => $request->get('foto')
+        ]);
+        
+        $message = $empleado ? 'Empleado agregado correctamente!' : 'El emplelado NO pudo agregarse!';
+        
+        return redirect()->route('admin.empleados.index')->with('message', $message);
     }
 
     /**
@@ -75,7 +108,11 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id_sucursal = \Session::get('id_sucursal');
+        $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
+        $empleado = User::find($id);
+        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        return view('empleados.edit', compact('sucursal', 'empleado', 'tipo_documento'));
     }
 
     /**
@@ -87,7 +124,39 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $empleado = User::find($id);
+        
+        $this->validate($request, [
+            'nombre'      => 'required|max:50',
+            'apellido'      => 'required|max:50',
+            'tipo_documento'      => 'required|in:dni,ruc',
+            'nro_documento'      => 'required|max:20',
+            'fecha_nacimiento'      => 'required',
+            'direccion'      => 'required|max:100',
+            'telefono'      => 'required|max:10',
+            'email'     => 'required|email',
+            'usuario'     => 'required',
+            'estado'      => 'required|in:1,0'
+        ]);
+      
+        $empleado->nombre = $request->get('nombre');
+        $empleado->apellido = $request->get('apellido');
+        $empleado->tipo_documento = $request->get('tipo_documento');
+        $empleado->nro_documento = $request->get('nro_documento');
+        $empleado->fecha_nacimiento = $request->get('fecha_nacimiento');
+        $empleado->direccion = $request->get('direccion');
+        $empleado->telefono = $request->get('telefono');
+        $empleado->email = $request->get('email');
+        $empleado->usuario = $request->get('usuario');
+        if($request->get('password') != ""){
+            $empleado->password = \Hash::make($request->get('password'));
+        }       
+        $empleado->estado = $request->get('estado');
+        $updated = $empleado->save();
+        
+        $message = $updated ? 'Empleado actualizado correctamente!' : 'El empleado NO pudo actualizarse!';
+        
+        return redirect()->route('admin.empleados.index')->with('message', $message);
     }
 
     /**
