@@ -5,6 +5,7 @@ namespace SisVenta\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SisVenta\Http\Requests;
+use SisVenta\Http\Requests\EmpleadoRequest;
 use SisVenta\Http\Controllers\Controller;
 
 use SisVenta\Sucursal;
@@ -52,10 +53,10 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmpleadoRequest $request)
     {
         //dd($request);
-        $this->validate($request, [
+        /*$this->validate($request, [
             'nombre'      => 'required|max:50',
             'apellido'      => 'required|max:50',
             'tipo_documento'      => 'required|in:dni,ruc',
@@ -67,7 +68,7 @@ class EmpleadoController extends Controller
             'usuario'     => 'required',
             'password'  => 'required|max:20',
             'estado'      => 'required|in:1,0'
-        ]);
+        ]);*/
 
         $empleado = User::create([
             'nombre' => $request->get('nombre'),
@@ -106,11 +107,10 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($empleado)
     {
         $id_sucursal = \Session::get('id_sucursal');
         $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        $empleado = User::find($id);
         $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
         return view('empleados.edit', compact('sucursal', 'empleado', 'tipo_documento'));
     }
@@ -122,10 +122,8 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $empleado = User::find($id);
-        
+    public function update(Request $request, $empleado)
+    {        
         $this->validate($request, [
             'nombre'      => 'required|max:50',
             'apellido'      => 'required|max:50',
@@ -134,8 +132,8 @@ class EmpleadoController extends Controller
             'fecha_nacimiento'      => 'required',
             'direccion'      => 'required|max:100',
             'telefono'      => 'required|max:10',
-            'email'     => 'required|email',
-            'usuario'     => 'required',
+            'email'     => 'required|email|unique:empleados,email,'.$empleado->id,
+            'usuario'     => 'required|unique:empleados,usuario,'.$empleado->id,
             'estado'      => 'required|in:1,0'
         ]);
       
@@ -165,8 +163,13 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($empleado)
     {
-        //
+        $empleado->estado = 0;
+        $upd = $empleado->save();
+        $message = $upd ? 'Empleado desactivado correctamente!' : 'El empleado NO pudo descactivarse!';
+        
+        return redirect()->route('admin.empleados.index')->with('message', $message);
+
     }
 }

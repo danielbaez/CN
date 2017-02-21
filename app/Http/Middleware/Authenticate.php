@@ -48,6 +48,7 @@ class Authenticate
             //return redirect('auth/login')->withErrors('Su cuenta de usuario está desacticada');
             return redirect()->route('login-get')->withErrors('Su cuenta está desactivada');
         }
+        //\Session::get('id_sucursal')
 
         return $next($request);
     }

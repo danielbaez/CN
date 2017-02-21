@@ -28,11 +28,12 @@ class SucursalController extends Controller
 
     public function lista()
     {
+        \Session::forget('id_sucursal');
         $sucursales = DB::table('usuarios')
             ->join('sucursales', 'usuarios.id_sucursal', '=', 'sucursales.id')
             ->where('usuarios.estado', 1)
             ->where('sucursales.estado', 1)
-            ->where('usuarios.id_empleado', 1)
+            ->where('usuarios.id_empleado', Auth::user()->id)
             //->select('usuarios.*', 'sucursales.*')
             ->select('sucursales.*')
             ->get();

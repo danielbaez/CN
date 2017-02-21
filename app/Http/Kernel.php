@@ -30,5 +30,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \SisVenta\Http\Middleware\RedirectIfAuthenticated::class,
         'no-cache' => \SisVenta\Http\Middleware\NoCache::class,
+        'sucursal' => \SisVenta\Http\Middleware\Sucursal::class,
     ];
 }

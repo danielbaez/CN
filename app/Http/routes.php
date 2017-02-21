@@ -14,7 +14,8 @@
 
 
 // User dependency injection
-Route::bind('user', function($user){
+Route::bind('empleados', function($user){
+	//dd(SisVenta\User::find($user));
     return SisVenta\User::find($user);
 });
 
@@ -39,11 +40,17 @@ Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function
 
 	Route::get('/sucursales/{id_sucursal}', ['as' => 'irSucurcal', 'uses' => 'HomeController@irSucurcal']);
 
-	Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard']);
+	Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard', 'middleware' => 'sucursal']);
 
 	//Route::get('/empleados', ['as' => 'empleados', 'uses' => 'EmpleadoController@index']);
 
-	Route::resource('empleados', 'EmpleadoController');
+	Route::group(['middleware' => 'sucursal'], function()
+	{
+	    //Route::resource('todo', 'TodoController', ['only' => ['index']]);
+	    Route::resource('empleados', 'EmpleadoController');
+	});
+
+	//Route::resource('empleados', 'EmpleadoController', ['middleware' => 'sucursal']);
 
 	// Route::group( ['middleware' => ['administrador']], function() {
 	// 	Route::resource('user', 'UserController');	
