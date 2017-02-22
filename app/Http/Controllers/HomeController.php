@@ -29,7 +29,7 @@ class HomeController extends Controller
             return \Redirect::to('/admin/dashboard');  
         }
         else{
-            dd(2);
+            dd(22);
         }
         //return View('template', compact('sucursal'));
          

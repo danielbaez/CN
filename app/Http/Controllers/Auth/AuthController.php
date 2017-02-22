@@ -29,7 +29,7 @@ class AuthController extends Controller
      * @return void
      */
 
-    protected $redirectPath = '/admin/sucursales';
+    protected $redirectPath = '/admin/listaSucursales';
 
     protected $redirectAfterLogout = '/auth/login';
 

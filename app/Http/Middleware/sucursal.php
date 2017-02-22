@@ -1,8 +1,27 @@
 <?php
 namespace SisVenta\Http\Middleware;
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
 class Sucursal
 {
+    /**
+     * The Guard implementation.
+     *
+     * @var Guard
+     */
+    protected $auth;
+
+    /**
+     * Create a new middleware instance.
+     *
+     * @param  Guard  $auth
+     * @return void
+     */
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -19,7 +38,17 @@ class Sucursal
         }
         else
         {
-            return $next($request);
+            $sucursal = \SisVenta\Sucursal::where('id', \Session::get('id_sucursal'))->where('estado', 1)->get();
+            if(!$sucursal->isEmpty()){
+                return $next($request);  
+            }
+            else
+            {
+                /*$this->auth->logout();
+                return redirect()->route('login-get')->withErrors('Se ha desactivado la sucursal');*/
+                return redirect()->route('home');
+            }
+            
         }
     }
 }

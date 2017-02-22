@@ -1,38 +1,22 @@
 @extends('template')
 @section('content')
-	<h3>Editar Empleado</h3>
+	<h3>Editar Sucursal</h3>
   <div class="row" style="width: 85%;margin: 0 auto">
       @include('partials.errors')
 
-      {!! Form::model($empleado, array('route' => array('admin.empleados.update', $empleado))) !!}
+      {!! Form::model($sucursalOne, array('route' => array('admin.sucursales.update', $sucursalOne))) !!}
           <input type="hidden" name="_method" value="PUT">
           <div class='col-xs-12 col-md-6'>
               <div class="form-group">
-                  <label for="name">Nombre:</label>
+                  <label for="name">Razón Social:</label>
                   
                   {!! 
                       Form::text(
-                          'nombre', 
+                          'razon_social', 
                           null, 
                           array(
                               'class'=>'form-control',
                               'autofocus' => 'autofocus',
-                              //'required' => 'required'
-                          )
-                      ) 
-                  !!}
-              </div>
-          </div>
-          <div class='col-xs-12 col-md-6'>
-              <div class="form-group">
-                  <label for="email">Apellido:</label>
-                  
-                  {!! 
-                      Form::text(
-                          'apellido', 
-                          null, 
-                          array(
-                              'class'=>'form-control',
                               //'required' => 'required'
                           )
                       ) 
@@ -52,22 +36,6 @@
                   {!! 
                       Form::text(
                           'nro_documento', 
-                          null, 
-                          array(
-                              'class'=>'form-control',
-                              //'required' => 'required'
-                          )
-                      ) 
-                  !!}
-              </div>
-          </div>
-          <div class='col-xs-12 col-md-6'>
-              <div class="form-group">
-                  <label for="email">Fecha Nacimiento:</label>
-                  
-                  {!! 
-                      Form::text(
-                          'fecha_nacimiento', 
                           null, 
                           array(
                               'class'=>'form-control',
@@ -111,27 +79,11 @@
           </div>
           <div class='col-xs-12 col-md-6'>
               <div class="form-group">
-                  <label for="email">Email:</label>
+                  <label for="email">Representante:</label>
                   
                   {!! 
                       Form::text(
-                          'email', 
-                          null, 
-                          array(
-                              'class'=>'form-control',
-                              //'required' => 'required'
-                          )
-                      ) 
-                  !!}
-              </div>
-          </div>
-          <div class='col-xs-12 col-md-6'>
-              <div class="form-group">
-                  <label for="email">Usuario:</label>
-                  
-                  {!! 
-                      Form::text(
-                          'usuario', 
+                          'representante', 
                           null, 
                           array(
                               'class'=>'form-control',
@@ -141,37 +93,6 @@
                   !!}
               </div>
           </div>             
-          <div class='col-xs-12 col-md-6'>
-              <div class="form-group">
-                  <label for="password">Password:</label>
-                  
-                  {!! 
-                      Form::password(
-                          'password', 
-                          array(
-                              'class'=>'form-control',
-                              //'required' => 'required'
-                          )
-                      ) 
-                  !!}
-              </div>
-          </div>              
-          <div class='col-xs-12 col-md-6'>
-              <div class="form-group">
-                  <label for="email">Foto:</label>
-                  
-                  {!! 
-                      Form::text(
-                          'foto', 
-                          null, 
-                          array(
-                              'class'=>'form-control',
-                              //'required' => 'required'
-                          )
-                      ) 
-                  !!}
-              </div>
-          </div>
           <div class='col-xs-12 col-md-6'>
               <div class="form-group">
                   <label for="type">Estado:</label><br>
@@ -186,7 +107,7 @@
           <div class='col-sm-12'>
               <div class="form-group text-center">
                   {!! Form::submit('Guardar', array('class'=>'btn btn-success')) !!}
-                  <a href="{{ route('admin.empleados.index') }}" class="btn btn-danger">Cancelar</a>
+                  <a href="{{ route('admin.sucursales.index') }}" class="btn btn-danger">Cancelar</a>
               </div>
           </div>
       {!! Form::close() !!}

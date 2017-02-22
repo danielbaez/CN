@@ -19,6 +19,16 @@ Route::bind('empleados', function($user){
     return SisVenta\User::find($user);
 });
 
+Route::bind('sucursales', function($sucursal){
+	//dd(SisVenta\User::find($user));
+    return SisVenta\Sucursal::find($sucursal);
+});
+
+Route::bind('usuarios', function($usuario){
+	//dd(SisVenta\User::find($user));
+    return SisVenta\Usuario::find($usuario);
+});
+
 Route::get('auth/login', [
 	'as' => 'login-get',
 	'uses' => 'Auth\AuthController@getLogin'
@@ -36,9 +46,9 @@ Route::get('auth/logout', [
 
 Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function () {
     
-	Route::get('/sucursales', ['as' => 'home','uses' => 'SucursalController@lista']);
+	Route::get('/listaSucursales', ['as' => 'home','uses' => 'SucursalController@lista']);
 
-	Route::get('/sucursales/{id_sucursal}', ['as' => 'irSucurcal', 'uses' => 'HomeController@irSucurcal']);
+	Route::get('/listaSucursales/{id_sucursal}', ['as' => 'irSucurcal', 'uses' => 'HomeController@irSucurcal']);
 
 	Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard', 'middleware' => 'sucursal']);
 
@@ -48,6 +58,8 @@ Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function
 	{
 	    //Route::resource('todo', 'TodoController', ['only' => ['index']]);
 	    Route::resource('empleados', 'EmpleadoController');
+	    Route::resource('sucursales', 'SucursalController');
+	    Route::resource('usuarios', 'UsuarioController');
 	});
 
 	//Route::resource('empleados', 'EmpleadoController', ['middleware' => 'sucursal']);

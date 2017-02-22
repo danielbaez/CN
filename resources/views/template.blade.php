@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>CompuNet</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -68,8 +68,8 @@
                   <li><a><i class="fa fa-edit"></i> Mantenimiento <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('admin.empleados.index') }}">Empleados</a></li>
-                      <li><a href="form.html">Sucursales</a></li>
-                      <li><a href="form_advanced.html">Usuarios</a></li>
+                      <li><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
+                      <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
                       <li><a href="form_validation.html">Configuración</a></li>
                     </ul>
                   </li>

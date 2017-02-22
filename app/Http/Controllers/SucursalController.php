@@ -5,6 +5,7 @@ namespace SisVenta\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SisVenta\Http\Requests;
+use SisVenta\Http\Requests\SucursalRequest;
 use SisVenta\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,14 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        
+        $id_sucursal = \Session::get('id_sucursal');
+        /*$session = new Session();
+        $id_sucursal = $session->get('id_sucursal');*/
+
+        $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get();
+        $sucursales = Sucursal::all();
+
+        return view('sucursales.index', compact('sucursal', 'sucursales'));
     }
 
     public function lista()
@@ -55,7 +63,11 @@ class SucursalController extends Controller
      */
     public function create()
     {
-        //
+        $id_sucursal = \Session::get('id_sucursal');
+
+        $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
+        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        return view('sucursales.create', compact('sucursal', 'tipo_documento'));
     }
 
     /**
@@ -64,9 +76,21 @@ class SucursalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SucursalRequest $request)
     {
-        //
+        $sucursal = Sucursal::create([
+            'razon_social' => $request->get('razon_social'),
+            'tipo_documento' => $request->get('tipo_documento'),
+            'nro_documento' => $request->get('nro_documento'),
+            'direccion' => $request->get('direccion'),
+            'telefono' => $request->get('telefono'),
+            'representante' => $request->get('representante'),
+            'estado' => $request->get('estado')
+        ]);
+        
+        $message = $sucursal ? 'Sucursal agregado correctamente!' : 'La sucursal NO pudo agregarse!';
+        
+        return redirect()->route('admin.sucursales.index')->with('message', $message);
     }
 
     /**
@@ -86,9 +110,12 @@ class SucursalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($sucursalOne)
     {
-        //
+        $id_sucursal = \Session::get('id_sucursal');
+        $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
+        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        return view('sucursales.edit', compact('sucursal', 'sucursalOne', 'tipo_documento'));
     }
 
     /**
@@ -98,9 +125,20 @@ class SucursalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SucursalRequest $request, $sucursal)
     {
-        //
+        $sucursal->razon_social = $request->get('razon_social');
+        $sucursal->tipo_documento = $request->get('tipo_documento');
+        $sucursal->nro_documento = $request->get('nro_documento');
+        $sucursal->direccion = $request->get('direccion');
+        $sucursal->telefono = $request->get('telefono');
+        $sucursal->representante = $request->get('representante');
+        $sucursal->estado = $request->get('estado');
+        $updated = $sucursal->save();
+        
+        $message = $updated ? 'Sucursal actualizado correctamente!' : 'La sucursal NO pudo actualizarse!';
+        
+        return redirect()->route('admin.sucursales.index')->with('message', $message);
     }
 
     /**
@@ -109,8 +147,12 @@ class SucursalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($sucursal)
     {
-        //
+        $sucursal->estado = 0;
+        $upd = $sucursal->save();
+        $message = $upd ? 'Sucursal desactivado correctamente!' : 'La sucursal NO pudo descactivarse!';
+        
+        return redirect()->route('admin.sucursales.index')->with('message', $message);
     }
 }
