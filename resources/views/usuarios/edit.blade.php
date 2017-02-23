@@ -1,10 +1,11 @@
 @extends('template')
 @section('content')
-	<h3>Crear Usuario</h3>
+	<h3>Editar Usuario</h3>
   <div class="row" style="width: 85%;margin: 0 auto">
       @include('partials.errors')
 
-      {!! Form::open(['route'=>'admin.usuarios.store']) !!}
+      {!! Form::model($usuario, array('route' => array('admin.usuarios.update', $usuario))) !!}
+          <input type="hidden" name="_method" value="PUT">
           <div class='col-xs-12 col-md-6'>
               <div class="form-group" id="companiesForm">
                 <label for="type">Empleado:</label>

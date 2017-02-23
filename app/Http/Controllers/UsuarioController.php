@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use SisVenta\Http\Requests;
 use SisVenta\Http\Controllers\Controller;
-
+use SisVenta\Http\Requests\UsuarioRequest;
 use SisVenta\Usuario;
 use SisVenta\User;
 use SisVenta\Sucursal;
@@ -66,9 +66,18 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsuarioRequest $request)
     {
-        //
+        $sucursal = Usuario::create([
+            'id_empleado' => $request->get('id_empleado'),
+            'id_sucursal' => $request->get('id_sucursal'),
+            'tipo_usuario' => $request->get('tipo_usuario'),
+            'estado' => $request->get('estado')
+        ]);
+        
+        $message = $sucursal ? 'Usuario agregado correctamente!' : 'El usuario NO pudo agregarse!';
+        
+        return redirect()->route('admin.usuarios.index')->with('message', $message);
     }
 
     /**
@@ -88,9 +97,15 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($usuario)
     {
-        //
+        $id_sucursal = \Session::get('id_sucursal');
+
+        $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
+        $tipo_usuario = array('administrador' =>'Administrador', 'empleado' => 'Empleado');
+        $empleados = User::orderBy('id', 'desc')->lists('nombre', 'id');
+        $sucursales = Sucursal::orderBy('id', 'desc')->lists('razon_social', 'id');
+        return view('usuarios.edit', compact('usuario', 'sucursal', 'tipo_usuario', 'empleados', 'sucursales'));
     }
 
     /**
@@ -100,9 +115,17 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UsuarioRequest $request, $usuario)
     {
-        //
+        $usuario->id_empleado = $request->get('id_empleado');
+        $usuario->id_sucursal = $request->get('id_sucursal');
+        $usuario->tipo_usuario = $request->get('tipo_usuario');
+        $usuario->estado = $request->get('estado');
+        $updated = $usuario->save();
+        
+        $message = $updated ? 'Usuario actualizado correctamente!' : 'El usuario NO pudo actualizarse!';
+        
+        return redirect()->route('admin.usuarios.index')->with('message', $message);
     }
 
     /**
