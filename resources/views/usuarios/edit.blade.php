@@ -28,13 +28,39 @@
               <div class="form-group">
                   <label for="type">Estado:</label><br>
                   <label class="radio-inline">
-                      {!! Form::radio('estado', 1, true) !!} Activo
+                      {!! Form::radio('estado', 1) !!} Activo
                   </label>
                   <label class="radio-inline">
                       {!! Form::radio('estado', 0) !!} Inactivo
                   </label>
               </div>
-          </div>  
+          </div>
+          <div class='col-xs-12'>
+              <div class="form-group" id="companiesForm">
+                <label for="type">Permisos:</label><br>
+                  <label class="checkbox-inline">
+                  {!! Form::checkbox('per_mantenimiento', 'on') !!} Mantenimiento
+                  </label>
+                  <label class="checkbox-inline">
+                  {!! Form::checkbox('per_almacen', 'on') !!} Almacen
+                  </label>
+                  <label class="checkbox-inline">
+                  {!! Form::checkbox('per_compra', 'on') !!} Compra
+                  </label>
+                  <label class="checkbox-inline">
+                  {!! Form::checkbox('per_venta', 'on') !!} Venta
+                  </label>
+                  <label class="checkbox-inline">
+                  {!! Form::checkbox('per_seguridad', 'on') !!} Backup
+                  </label>
+                  <label class="checkbox-inline">
+                  {!! Form::checkbox('per_con_compra', 'on') !!} Reporte Compras
+                  </label> 
+                  <label class="checkbox-inline">
+                  {!! Form::checkbox('per_con_venta', 'on') !!} Reporte Ventas
+                  </label>
+              </div>
+          </div>    
           <div class='col-sm-12'>
               <div class="form-group text-center">
                   {!! Form::submit('Guardar', array('class'=>'btn btn-success')) !!}
