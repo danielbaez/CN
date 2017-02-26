@@ -4,7 +4,7 @@ namespace SisVenta\Http\Requests;
 
 use SisVenta\Http\Requests\Request;
 
-class SucursalRequest extends Request
+class DocumentoRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,8 @@ class SucursalRequest extends Request
     public function rules()
     {
         return [
-            'razon_social'      => 'required|max:100',
-            'tipo_documento'      => 'required',
-            'nro_documento'      => 'required|max:20',
-            'direccion'      => 'required|max:100',
-            'telefono'      => 'required|max:10',
-            'representante'  => 'required|max:50',
+            'nombre'      => 'required|max:20',
+            'operacion'      => 'required|in:Persona,Proveedor',
             'estado'      => 'required|in:1,0'
         ];
     }

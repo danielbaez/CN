@@ -10,6 +10,7 @@ use SisVenta\Http\Controllers\Controller;
 
 use SisVenta\Sucursal;
 use SisVenta\User;
+use SisVenta\Documento;
 
 class EmpleadoController extends Controller
 {
@@ -43,7 +44,7 @@ class EmpleadoController extends Controller
         $id_sucursal = $session->get('id_sucursal');*/
 
         $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        $tipo_documento = Documento::where('operacion', 'Persona')->orderBy('id', 'desc')->lists('nombre', 'nombre');
         return view('empleados.create', compact('sucursal', 'tipo_documento'));
     }
 
@@ -81,9 +82,21 @@ class EmpleadoController extends Controller
             'email' => $request->get('email'),
             'usuario' => $request->get('usuario'),
             'password' => \Hash::make($request->get('password')),
-            'estado' => $request->get('estado'),
-            'foto' => $request->get('foto')
+            'estado' => $request->get('estado')
         ]);
+
+        if($request->file('foto'))
+        {
+            $imageName = $empleado->id.'_'.$request->file('foto')->getClientOriginalName(); 
+            //$request->file('imagen')->getClientOriginalExtension();
+
+            $request->file('foto')->move(
+                base_path() . '/public/images/empleados/', $imageName
+            );
+
+            $empleado->foto = $empleado->id.'_'.$request->file('foto')->getClientOriginalName(); 
+            $empleado->save();
+        }
         
         $message = $empleado ? 'Empleado agregado correctamente!' : 'El emplelado NO pudo agregarse!';
         
@@ -111,7 +124,7 @@ class EmpleadoController extends Controller
     {
         $id_sucursal = \Session::get('id_sucursal');
         $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        $tipo_documento = Documento::where('operacion', 'Persona')->orderBy('id', 'desc')->lists('nombre', 'nombre');
         return view('empleados.edit', compact('sucursal', 'empleado', 'tipo_documento'));
     }
 
@@ -127,7 +140,7 @@ class EmpleadoController extends Controller
         $this->validate($request, [
             'nombre'      => 'required|max:50',
             'apellido'      => 'required|max:50',
-            'tipo_documento'      => 'required|in:dni,ruc',
+            'tipo_documento'      => 'required',
             'nro_documento'      => 'required|max:20',
             'fecha_nacimiento'      => 'required',
             'direccion'      => 'required|max:100',
@@ -136,6 +149,18 @@ class EmpleadoController extends Controller
             'usuario'     => 'required|unique:empleados,usuario,'.$empleado->id,
             'estado'      => 'required|in:1,0'
         ]);
+
+        if($request->file('foto'))
+        {
+            \File::delete(base_path() . '/public/images/empleados/'. $empleado->foto);
+            $imageName = $empleado->id.'_'.$request->file('foto')->getClientOriginalName();
+            $empleado->foto = $imageName;
+            $request->file('foto')->move(
+                base_path() . '/public/images/empleados/', $imageName
+            );
+
+            \Session::put('image-user', $imageName);
+        }
       
         $empleado->nombre = $request->get('nombre');
         $empleado->apellido = $request->get('apellido');

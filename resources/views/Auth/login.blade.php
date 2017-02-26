@@ -1,7 +1,7 @@
 @extends('auth.template')
 @section('content')
 	<div class="container text-center page-login">
-		<img class="logo" src="" alt="">
+		<img src="{{ asset('images/logo.png') }}" class="logo img-responsive">
 
 		<div class="row container-login">
 			@include('partials.errors')
@@ -19,12 +19,12 @@
 			        <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña">
 			      </div>
 			    </div>
-			    <div class="form-group">
+			    <!-- <div class="form-group">
 			      
 			      <div class="col-sm-12">
 			        <input type="checkbox" name="remember"> Remember Me
 			      </div>
-			    </div>
+			    </div> -->
 			    <div class="form-group">
 			      <div class="col-sm-12">
 			        <button type="submit" class="btn btn-primary">Ingresar</button>

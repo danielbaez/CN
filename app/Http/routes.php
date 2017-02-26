@@ -29,6 +29,26 @@ Route::bind('usuarios', function($usuario){
     return SisVenta\Usuario::find($usuario);
 });
 
+Route::bind('documentos', function($documento){
+	//dd(SisVenta\User::find($user));
+    return SisVenta\Documento::find($documento);
+});
+
+Route::bind('configuracion', function($conf){
+	//dd(SisVenta\User::find($user));
+    return SisVenta\Configuracion::find($conf);
+});
+
+Route::bind('categorias', function($categoria){
+	//dd(SisVenta\User::find($user));
+    return SisVenta\Categoria::find($categoria);
+});
+
+Route::bind('productos', function($producto){
+	//dd(SisVenta\User::find($user));
+    return SisVenta\Producto::find($producto);
+});
+
 Route::get('auth/login', [
 	'as' => 'login-get',
 	'uses' => 'Auth\AuthController@getLogin'
@@ -50,16 +70,25 @@ Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function
 
 	Route::get('/listaSucursales/{id_sucursal}', ['as' => 'irSucurcal', 'uses' => 'HomeController@irSucurcal']);
 
-	Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard', 'middleware' => 'sucursal']);
-
 	//Route::get('/empleados', ['as' => 'empleados', 'uses' => 'EmpleadoController@index']);
 
 	Route::group(['middleware' => 'sucursal'], function()
 	{
+		Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard']);
+		//Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard', 'middleware' => 'sucursal']);
 	    //Route::resource('todo', 'TodoController', ['only' => ['index']]);
-	    Route::resource('empleados', 'EmpleadoController');
-	    Route::resource('sucursales', 'SucursalController');
-	    Route::resource('usuarios', 'UsuarioController');
+	    Route::group(['middleware' => 'per-mantenimiento'], function() {
+			Route::resource('empleados', 'EmpleadoController');
+		    Route::resource('sucursales', 'SucursalController');
+		    Route::resource('usuarios', 'UsuarioController');
+		    Route::resource('documentos', 'DocumentosController');
+		    Route::resource('configuracion', 'ConfiguracionController');
+		});
+		Route::group(['middleware' => 'per-almacen'], function() {
+			Route::resource('categorias', 'CategoriaController');
+			Route::resource('productos', 'ProductoController');
+		});
+	    
 	});
 
 	//Route::resource('empleados', 'EmpleadoController', ['middleware' => 'sucursal']);

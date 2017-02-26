@@ -4,7 +4,7 @@
   <div class="row" style="width: 85%;margin: 0 auto">
       @include('partials.errors')
 
-      {!! Form::model($empleado, array('route' => array('admin.empleados.update', $empleado))) !!}
+      {!! Form::model($empleado, array('route' => array('admin.empleados.update', $empleado), 'files'=>true)) !!}
           <input type="hidden" name="_method" value="PUT">
           <div class='col-xs-12 col-md-6'>
               <div class="form-group">
@@ -159,11 +159,12 @@
           <div class='col-xs-12 col-md-6'>
               <div class="form-group">
                   <label for="email">Foto:</label>
-                  
+                  @if(is_file(public_path().'/images/empleados/'.$empleado->foto))
+                      <img class="img-circle" width="120px" height="120px" style="display:block;margin: 0 auto;margin-bottom: 10px;" src="{{asset('images/empleados/'.$empleado->foto)}}">
+                  @endif
                   {!! 
-                      Form::text(
+                      Form::file(
                           'foto', 
-                          null, 
                           array(
                               'class'=>'form-control',
                               //'required' => 'required'

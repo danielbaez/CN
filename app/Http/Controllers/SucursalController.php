@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 
 use SisVenta\Usuario;
 use SisVenta\Sucursal;
-
+use SisVenta\Documento;
+use SisVenta\Configuracion;
 use DB;
 
 class SucursalController extends Controller
@@ -66,7 +67,7 @@ class SucursalController extends Controller
         $id_sucursal = \Session::get('id_sucursal');
 
         $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        $tipo_documento = Documento::where('operacion', 'Persona')->orderBy('id', 'desc')->lists('nombre', 'nombre');
         return view('sucursales.create', compact('sucursal', 'tipo_documento'));
     }
 
@@ -114,7 +115,7 @@ class SucursalController extends Controller
     {
         $id_sucursal = \Session::get('id_sucursal');
         $sucursal = Sucursal::where('id', $id_sucursal)->where('estado', 1)->get(); 
-        $tipo_documento = array('dni' =>'DNI', 'ruc' => 'RUC');
+        $tipo_documento = Documento::where('operacion', 'Persona')->orderBy('id', 'desc')->lists('nombre', 'nombre');
         return view('sucursales.edit', compact('sucursal', 'sucursalOne', 'tipo_documento'));
     }
 

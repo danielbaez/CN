@@ -4,7 +4,7 @@ namespace SisVenta\Http\Requests;
 
 use SisVenta\Http\Requests\Request;
 
-class EmpleadoRequest extends Request
+class CategoriaRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,7 @@ class EmpleadoRequest extends Request
     {
         return [
             'nombre'      => 'required|max:50',
-            'apellido'      => 'required|max:50',
-            'tipo_documento'      => 'required',
-            'nro_documento'      => 'required|max:20',
-            'fecha_nacimiento'      => 'required',
-            'direccion'      => 'required|max:100',
-            'telefono'      => 'required|max:10',
-            'email'     => 'required|unique:empleados',
-            'usuario'     => 'required|unique:empleados',
-            'password'  => 'required|max:20',
+            'descripcion'      => 'required|max:256',
             'estado'      => 'required|in:1,0'
         ];
     }

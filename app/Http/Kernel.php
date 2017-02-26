@@ -31,5 +31,7 @@ class Kernel extends HttpKernel
         'guest' => \SisVenta\Http\Middleware\RedirectIfAuthenticated::class,
         'no-cache' => \SisVenta\Http\Middleware\NoCache::class,
         'sucursal' => \SisVenta\Http\Middleware\Sucursal::class,
+        'per-mantenimiento' => \SisVenta\Http\Middleware\PerMantenimiento::class,
+        'per-almacen' => \SisVenta\Http\Middleware\PerAlmacen::class
     ];
 }

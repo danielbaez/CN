@@ -4,7 +4,7 @@
   <div class="row" style="width: 85%;margin: 0 auto">
       @include('partials.errors')
 
-      {!! Form::open(['route'=>'admin.empleados.store']) !!}
+      {!! Form::open(['route'=>'admin.empleados.store', 'files'=>true]) !!}
           <div class='col-xs-12 col-md-6'>
               <div class="form-group">
                   <label for="name">Nombre:</label>
@@ -160,9 +160,8 @@
                   <label for="email">Foto:</label>
                   
                   {!! 
-                      Form::text(
-                          'foto', 
-                          null, 
+                      Form::file(
+                          'foto',
                           array(
                               'class'=>'form-control',
                               //'required' => 'required'

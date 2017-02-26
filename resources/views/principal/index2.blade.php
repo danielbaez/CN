@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Compunet | </title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -38,7 +38,8 @@
         <div class="top_nav" style="margin-left: 0">
           <div class="nav_menu">
             <nav>
-            <img src="http://www.grupocnet.com.co/templates/umaster/images/logo.svg" style="width: 230px;height: 57px;">
+              <img src="{{asset('images/logo.png')}}" style="width: 230px;height: 57px;">
+            
               <!-- <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
 
@@ -47,7 +48,12 @@
               <ul class="nav navbar-nav navbar-right" style="width: auto">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('images/img.jpg') }}" alt="">{{ Auth::user()->usuario }}
+                    @if(is_file(public_path().'/images/empleados/'.\Session::get('image-user')))
+                      <img src="{{asset('images/empleados/'.\Session::get('image-user'))}}">
+                    @else
+                        <img src="{{ asset('images/img.jpg') }}" alt=""> 
+                    @endif
+                    {{ Auth::user()->usuario }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

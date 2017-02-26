@@ -1,6 +1,10 @@
 @extends('template')
 @section('content')
 	<h3>Usuarios <a class="btn btn-success" href="{{ route('admin.usuarios.create') }}"><i class="fa fa-plus fa-lg"></i> Crear</a></h3>
+    si es dl tipo admin entoncs no mostrar sucursales<br>
+    la difrenrecia de persimos en el caso de empleado con  admin, es en los reportes
+    <br> admin : podras ver los reportes en base al escoger sucrusales
+    <br>empleado:podra ver reportes de solo la sucrusal al cual pertenece
     @include('partials.messages')
 	<div class="row">
 		<div class="table-responsive">

@@ -36,7 +36,9 @@
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
               <!-- <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a> -->
-              <img src="http://www.grupocnet.com.co/templates/umaster/images/logo.svg" class="img-responsive">
+              
+              <img src="{{ asset('images/logo.png') }}" class="img-responsive" style="height: 57px;">
+              
             </div>
 
             <div class="clearfix"></div>
@@ -44,7 +46,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                @if(is_file(public_path().'/images/empleados/'.\Session::get('image-user')))
+                    <img src="{{asset('images/empleados/'.\Session::get('image-user'))}}" class="img-circle profile_img"> 
+                @else
+                    <img class="img-circle profile_img" src="{{ asset('images/img.jpg') }}">
+                @endif
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>
@@ -71,23 +77,28 @@
                       <li><a href="{{ route('admin.empleados.index') }}">Empleados</a></li>
                       <li><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
                       <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
-                      <li><a href="form_validation.html">Configuración</a></li>
+                      <li><a href="{{ route('admin.documentos.index') }}">Documentos</a></li>
+                      <li><a href="{{ route('admin.configuracion.index') }}">Configuración</a></li>
                     </ul>
                   </li>
                   @endif
+                  @if(\Session::get('per_almacen') == true)
                   <li><a><i class="fa fa-desktop"></i> Almacen <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="general_elements.html">General Elements</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
-                      <li><a href="typography.html">Typography</a></li>
+                      <li><a href="{{ route('admin.categorias.index') }}">Categorías</a></li>
+                      <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
                     </ul>
                   </li>
+                  @endif
+                  @if(\Session::get('per_compra') == true)
                   <li><a><i class="fa fa-table"></i> Compra <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tables.html">Tables</a></li>
                       <li><a href="tables_dynamic.html">Table Dynamic</a></li>
                     </ul>
                   </li>
+                  @endif
+                  @if(\Session::get('per_venta') == true)
                   <li><a><i class="fa fa-bar-chart-o"></i> Venta <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="chartjs.html">Chart JS</a></li>
@@ -97,16 +108,21 @@
                       <li><a href="other_charts.html">Other Charts</a></li>
                     </ul>
                   </li>
+                  @endif
+                  @if(\Session::get('per_seguridad') == true)
                   <li><a><i class="fa fa-clone"></i>Seguridad <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="fixed_sidebar.html">Backup</a></li>
                     </ul>
                   </li>
+                  @endif
                 </ul>
               </div>
+              @if(\Session::get('per_con_compra') == true || \Session::get('per_con_venta') == true)
               <div class="menu_section">
                 <h3>Reportes</h3>
                 <ul class="nav side-menu">
+                  @if(\Session::get('per_con_compra') == true)
                   <li><a><i class="fa fa-bug"></i> Compra <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="e_commerce.html">E-commerce</a></li>
@@ -116,6 +132,8 @@
                       <li><a href="profile.html">Profile</a></li>
                     </ul>
                   </li>
+                  @endif
+                  @if(\Session::get('per_con_venta') == true)
                   <li><a><i class="fa fa-windows"></i> Venta <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="page_403.html">403 Error</a></li>
@@ -125,9 +143,11 @@
                       <li><a href="login.html">Login Page</a></li>
                       <li><a href="pricing_tables.html">Pricing Tables</a></li>
                     </ul>
-                  </li>                 
+                  </li>
+                  @endif                 
                 </ul>
               </div>
+              @endif
 
             </div>
             <!-- /sidebar menu -->
@@ -147,7 +167,12 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('images/img.jpg') }}" alt="">{{ Auth::user()->usuario }}
+                    @if(is_file(public_path().'/images/empleados/'.\Session::get('image-user')))
+                      <img src="{{asset('images/empleados/'.\Session::get('image-user'))}}">
+                    @else
+                        <img src="{{ asset('images/img.jpg') }}" alt=""> 
+                    @endif
+                    {{ Auth::user()->usuario }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
