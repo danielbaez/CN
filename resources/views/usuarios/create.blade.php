@@ -7,22 +7,23 @@
       {!! Form::open(['route'=>'admin.usuarios.store']) !!}
           <div class='col-xs-12 col-md-6'>
               <div class="form-group" id="companiesForm">
+                <label for="type">Tipo Usuario:</label>
+                  {!! Form::select('tipo_usuario', $tipo_usuario, null, ['class' => 'form-control tipo_usuario', 'placeholder' => 'Seleccione']) !!}
+              </div>
+          </div>
+          <div class='col-xs-12 col-md-6'>
+              <div class="form-group" id="companiesForm">
                 <label for="type">Empleado:</label>
                   {!! Form::select('id_empleado', $empleados, null, ['class' => 'form-control', 'placeholder' => 'Seleccione']) !!}
               </div>
           </div>
-          <div class='col-xs-12 col-md-6'>
+          <div class='col-xs-12 col-md-6 div-sucursales'>
               <div class="form-group" id="companiesForm">
                 <label for="type">Sucursal:</label>
-                  {!! Form::select('id_sucursal', $sucursales, null, ['class' => 'form-control', 'placeholder' => 'Seleccione']) !!}
+                  {!! Form::select('id_sucursal', $sucursales, null, ['class' => 'form-control sucursales', 'placeholder' => 'Seleccione']) !!}
               </div>
           </div>
-          <div class='col-xs-12 col-md-6'>
-              <div class="form-group" id="companiesForm">
-                <label for="type">Tipo Usuario:</label>
-                  {!! Form::select('tipo_usuario', $tipo_usuario, null, ['class' => 'form-control', 'placeholder' => 'Seleccione']) !!}
-              </div>
-          </div>
+          
           <div class='col-xs-12 col-md-6'>
               <div class="form-group" style="margin-bottom: 18px">
                   <label for="type">Estado:</label>
