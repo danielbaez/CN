@@ -49,6 +49,11 @@ Route::bind('productos', function($producto){
     return SisVenta\Producto::find($producto);
 });
 
+Route::bind('proveedores', function($proveedor){
+	//dd(SisVenta\User::find($user));
+    return SisVenta\Proveedor::find($proveedor);
+});
+
 Route::get('auth/login', [
 	'as' => 'login-get',
 	'uses' => 'Auth\AuthController@getLogin'
@@ -87,6 +92,9 @@ Route::group(['middleware' => ['auth', 'no-cache'], 'prefix'=>'admin'], function
 		Route::group(['middleware' => 'per-almacen'], function() {
 			Route::resource('categorias', 'CategoriaController');
 			Route::resource('productos', 'ProductoController');
+		});
+		Route::group(['middleware' => 'per-compra'], function() {
+			Route::resource('proveedores', 'ProveedorController');
 		});
 	    
 	});

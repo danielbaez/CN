@@ -4,7 +4,7 @@
   <div class="row" style="width: 85%;margin: 0 auto">
       @include('partials.errors')
 
-      {!! Form::open(['route'=>'admin.usuarios.store']) !!}
+      {!! Form::open(['route'=>'admin.usuarios.store', 'id'=>'form-usuario']) !!}
           <div class='col-xs-12 col-md-6'>
               <div class="form-group" id="companiesForm">
                 <label for="type">Tipo Usuario:</label>

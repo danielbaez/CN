@@ -93,19 +93,20 @@
                   @if(\Session::get('per_compra') == true)
                   <li><a><i class="fa fa-table"></i> Compra <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                      <li><a href="{{ route('admin.proveedores.index') }}">Proveedores</a></li>
+                      <li><a href="tables_dynamic.html">Ingresos</a></li>
                     </ul>
                   </li>
                   @endif
                   @if(\Session::get('per_venta') == true)
                   <li><a><i class="fa fa-bar-chart-o"></i> Venta <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Chart JS</a></li>
-                      <li><a href="chartjs2.html">Chart JS2</a></li>
-                      <li><a href="morisjs.html">Moris JS</a></li>
-                      <li><a href="echarts.html">ECharts</a></li>
-                      <li><a href="other_charts.html">Other Charts</a></li>
+                      <li><a href="chartjs.html">Clientes</a></li>
+                      <li><a href="chartjs2.html">Ventas</a></li>
+                      <li><a href="morisjs.html">Pedidos</a></li>
+                      <li><a href="echarts.html">Créditos</a></li>
+                      <li><a href="other_charts.html">Deudas</a></li>
+                      <li><a href="other_charts.html">Configuración</a></li>
                     </ul>
                   </li>
                   @endif

@@ -32,6 +32,7 @@ class Kernel extends HttpKernel
         'no-cache' => \SisVenta\Http\Middleware\NoCache::class,
         'sucursal' => \SisVenta\Http\Middleware\Sucursal::class,
         'per-mantenimiento' => \SisVenta\Http\Middleware\PerMantenimiento::class,
-        'per-almacen' => \SisVenta\Http\Middleware\PerAlmacen::class
+        'per-almacen' => \SisVenta\Http\Middleware\PerAlmacen::class,
+        'per-compra' => \SisVenta\Http\Middleware\PerCompra::class
     ];
 }

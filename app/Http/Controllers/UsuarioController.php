@@ -130,7 +130,10 @@ class UsuarioController extends Controller
     public function update(UsuarioRequest $request, $usuario)
     {
         $usuario->id_empleado = $request->get('id_empleado');
-        $usuario->id_sucursal = $request->get('id_sucursal');
+        if($request->get('tipo_usuario') != 'administrador')
+        {
+            $usuario->id_sucursal = $request->get('id_sucursal');  
+        }
         $usuario->tipo_usuario = $request->get('tipo_usuario');
         $usuario->estado = $request->get('estado');
         $usuario->per_mantenimiento = $request->get('per_mantenimiento') == 'on' ? 1 : 0;
